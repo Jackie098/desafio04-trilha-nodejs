@@ -6,10 +6,21 @@ interface IRequest {
 }
 
 class ListAllUsersUseCase {
-  constructor(private usersRepository: IUsersRepository) {}
+  // eslint-disable-next-line prettier/prettier
+  constructor(private usersRepository: IUsersRepository) { }
 
   execute({ user_id }: IRequest): User[] {
-    // Complete aqui
+    const userExists = this.usersRepository.findById(user_id);
+
+    if (!userExists) {
+      throw new Error("User doesnt exists");
+    }
+
+    if (!userExists.admin) {
+      throw new Error("User doesnt a admin. Restricted access for admin");
+    }
+
+    return this.usersRepository.list();
   }
 }
 
