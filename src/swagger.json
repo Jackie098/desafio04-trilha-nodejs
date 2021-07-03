@@ -44,6 +44,63 @@
             "description": "User already exists"
           }
         }
+      },
+      "get": {
+
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Show user profile",
+        "description": "Show the profile of only one user",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "required": "true",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The user ID - uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "date",
+                      "pattern": "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/",
+                      "example": "1234-12-30"
+                    },
+                    "updated_at": {
+                      "type": "date",
+                      "pattern": "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/",
+                      "example": "1234-12-30"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User didn't found"
+          }
+        }
       }
     },
     "/users/{user_id}/admin": {
