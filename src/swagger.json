@@ -38,7 +38,26 @@
         },
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "admin": {
+                      "type": "boolean",
+                      "example": "false"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "User already exists"
@@ -46,7 +65,60 @@
         }
       },
       "get": {
-
+        "tags": ["User"],
+        "summary": "List all users",
+        "description": "Show all users",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "user_id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "date",
+                        "pattern": "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/",
+                        "example": "1234-12-30"
+                      },
+                      "updated_at": {
+                        "type": "date",
+                        "pattern": "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/",
+                        "example": "1234-12-30"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User doesn't exists or he doesn't a adm"
+          }
+        }
       }
     },
     "/users/{user_id}": {
@@ -60,7 +132,8 @@
             "name": "user_id",
             "required": "true",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "The user ID - uuid"
           }
@@ -74,7 +147,8 @@
                   "type": "object",
                   "properties": {
                     "id": {
-                      "type": "string"
+                      "type": "string",
+                      "format": "uuid"
                     },
                     "name": {
                       "type": "string"
@@ -114,7 +188,8 @@
             "name": "user_id",
             "required": "true",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "The user ID - uuid"
           }
